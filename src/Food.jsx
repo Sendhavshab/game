@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import eat from "/eat.mp3";
 
 const eatSound = new Audio(eat);
-const Food = ({ positionX, positionDown, setScore, setImoge }) => {
+const Food = ({ characterPosX, characterPosY, setScore, setImoge }) => {
   const [posX, setPosX] = useState(0);
   const [posY, setPosY] = useState(0);
   const [food, setFood] = useState("🍕");
@@ -18,41 +18,33 @@ const Food = ({ positionX, positionDown, setScore, setImoge }) => {
     if (!posX || !posY) {
       GetFoodPos();
     }
-    console.log("pos", positionX, posX, positionDown, posY);
+    console.log("pos", characterPosX, posX, characterPosY, posY);
     if (
-      positionX.toFixed() - posX.toFixed() < 3 &&
-      positionX.toFixed() - posX.toFixed() > -3 &&
-      positionDown.toFixed() - posY.toFixed() < 5 &&
-      positionDown.toFixed() - posY.toFixed() > -3 &&
+      characterPosX.toFixed() - posX.toFixed() < 3 &&
+      characterPosX.toFixed() - posX.toFixed() > -3 &&
+      characterPosY.toFixed() - posY.toFixed() < 5 &&
+      characterPosY.toFixed() - posY.toFixed() > -3 &&
       posX !== 0
-    ) { 
-        
-        eatSound.currentTime = 0;
-        GetFoodPos();
-        setScore((p) => p + 1);
-        setFood(foodsArray[+(Math.random() * 107).toFixed()]);
-        eatSound.play();
-    }
-    
-    if (
-      positionX.toFixed() - posX.toFixed() < 10 &&
-      positionX.toFixed() - posX.toFixed() > -10 &&
-      positionDown.toFixed() - posY.toFixed() < 25 &&
-      positionDown.toFixed() - posY.toFixed() > -25 &&
-      posX !== 0
-    ) { 
-     setImoge("😛");
-    } else{
-        setImoge("😊");
-
+    ) {
+      eatSound.currentTime = 0;
+      GetFoodPos();
+      setScore((p) => p + 1);
+      setFood(foodsArray[+(Math.random() * 107).toFixed()]);
+      eatSound.play();
     }
 
-  }, [positionX, positionDown]);
-
-
-  
-
-
+    if (
+      characterPosX.toFixed() - posX.toFixed() < 10 &&
+      characterPosX.toFixed() - posX.toFixed() > -10 &&
+      characterPosY.toFixed() - posY.toFixed() < 25 &&
+      characterPosY.toFixed() - posY.toFixed() > -25 &&
+      posX !== 0
+    ) {
+      setImoge("😛");
+    } else {
+      setImoge("😊");
+    }
+  }, [characterPosX, characterPosY]);
 
   return (
     <div
